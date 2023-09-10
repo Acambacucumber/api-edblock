@@ -1,6 +1,6 @@
 import {getClassInfo, createClass, getClassStudents} from './controllers/class.js'
 import {createPost} from './controllers/posts.js'
-import {createUser, studentAddClass, listClasses, authUser} from './controllers/user.js'
+import {createUser, studentAddClass, listClasses, authUser, getUserInfo} from './controllers/user.js'
 import express from 'express'
 import cors from 'cors'
 import sgMail from '@sendgrid/mail'
@@ -20,6 +20,14 @@ app.post('/users/authUser', async (req, res) => {
   console.log("in express:")
   console.log(req.body)
   const payload = await authUser(req.body)
+  console.log(payload)
+  res.json(payload)
+})
+
+app.post('/users', async (req, res) => {
+  console.log("in express:")
+  console.log(req.body)
+  const payload = await getUserInfo(req.body)
   console.log(payload)
   res.json(payload)
 })
@@ -65,7 +73,7 @@ app.post('/post/createPost', async (req, res) => {
 })
 
 // Send Grid
-app.post('post/sg', async (req, res) => {
+app.post('/post/sg', async (req, res) => {
   sgMail.send(req.body)
     .then((response) => {
       console.log(response)

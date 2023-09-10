@@ -8,15 +8,15 @@ mongoose.connect(uri)
 export async function getClassInfo(req) {
   /**
      * Required format:
-     * - req.classTitle
+     * - req.classCode
      */
-  if (req.classTitle === null) {
+  if (req.classCode === null) {
     return {
       status: false,
       message: "Invalid request, missing classtitle"
     }
   }
-  const currClass = await Class.findOne({title: req.classTitle})
+  const currClass = await Class.findOne({title: req.classCode})
   if (currClass === null) {
     return {
       status: false,
@@ -61,7 +61,7 @@ export async function createClass(req) {
     }
   }
 
-  const classExists = await Class.exists({title: req.classTitle})
+  const classExists = await Class.exists({title: req.classCode})
   if (classExists !== null) {
     return {
       status: false,
@@ -92,7 +92,7 @@ export async function getClassStudents(req) {
    * - req.classTitle
    */
 
-  const currClass = await Class.findOne({title: req.classTitle})
+  const currClass = await Class.findOne({title: req.classCode})
   if (currClass === null) {
     return {
       status: false,

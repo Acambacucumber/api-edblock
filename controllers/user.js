@@ -103,13 +103,35 @@ export async function listClasses(req) {
     classSet.push(JSON.stringify({
       title: cls.title, 
       description: cls.description,
-      professor: cls.professor
+      professor: cls.professor,
+      classCode: cls.classCode,
     }))
   }
   return {
     status: true,
     docs: classSet
   }
+}
+
+// getter method
+export async function getUserInfo(req) {
+  /**
+   * Format:
+   * req.email
+   */
+  const user = await User.findOne({email: req.email})
+  if (user === null) {
+    return {
+      status: false,
+      message: "User not found"
+    }
+  } else {
+    return {
+      status: true,
+      docs: user
+    }
+  }
+  
 }
 
  export async function authUser(req) {
