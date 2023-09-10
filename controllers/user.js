@@ -125,8 +125,13 @@ export async function listClasses(req) {
       message: "missing field."
     }
   }
-  console.log(req.email)
   const user = await User.findOne({ email: req.email})
+  if (user === null) {
+    return {
+      status: false,
+      message: "Unable to find user " + req.email
+    }
+  }
   console.log(user)
   if (req.password === user.password) {
     return {
